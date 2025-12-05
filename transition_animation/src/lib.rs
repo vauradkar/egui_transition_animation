@@ -1,9 +1,9 @@
 #![doc = include_str!("../docs/main.md")]
 
 use egui::{
-    self,
-    emath::{easing, TSTransform},
-    Ui, Vec2,
+    self, Ui, Vec2,
+    emath::{TSTransform, easing},
+    util::id_type_map::SerializableAny,
 };
 use std::{
     fmt::{self},
@@ -14,8 +14,8 @@ use std::{
 pub mod prelude {
     //! Re-exports of the most commonly used types and functions.
     pub use super::{
-        animated_pager, animated_pager_backward, animated_pager_forward,
-        animated_pager_with_direction, TransitionStyle, TransitionType,
+        TransitionStyle, TransitionType, animated_pager, animated_pager_backward,
+        animated_pager_forward, animated_pager_with_direction,
     };
 }
 
@@ -330,7 +330,7 @@ impl TransitionStyle {
 ///     }
 /// }
 /// ```
-pub fn animated_pager_forward<Page: Sync + Send + Clone + 'static + Eq + PartialOrd, Ret>(
+pub fn animated_pager_forward<Page: SerializableAny + Eq + PartialOrd, Ret>(
     ui: &mut Ui,
     target_page: Page,
     style: &TransitionStyle,
@@ -354,7 +354,7 @@ pub fn animated_pager_forward<Page: Sync + Send + Clone + 'static + Eq + Partial
 ///
 /// # Returns
 /// A [`PagerRet`] containing information about the current pager state.
-pub fn animated_pager_backward<Page: Sync + Send + Clone + 'static + Eq + PartialOrd, Ret>(
+pub fn animated_pager_backward<Page: SerializableAny + Eq + PartialOrd, Ret>(
     ui: &mut Ui,
     target_page: Page,
     style: &TransitionStyle,
@@ -383,7 +383,7 @@ pub fn animated_pager_backward<Page: Sync + Send + Clone + 'static + Eq + Partia
 ///
 /// # Returns
 /// A [`PagerRet`] containing information about the current pager state.
-pub fn animated_pager<Page: Sync + Send + Clone + 'static + Eq + PartialOrd, Ret>(
+pub fn animated_pager<Page: SerializableAny + Eq + PartialOrd, Ret>(
     ui: &mut Ui,
     target_page: Page,
     style: &TransitionStyle,
@@ -419,7 +419,7 @@ pub fn animated_pager<Page: Sync + Send + Clone + 'static + Eq + PartialOrd, Ret
 ///
 /// # Returns
 /// A [`PagerRet`] containing information about the current pager state.
-pub fn animated_pager_with_direction<Page: Sync + Send + Clone + 'static + Eq, Ret>(
+pub fn animated_pager_with_direction<Page: SerializableAny + Eq, Ret>(
     ui: &mut Ui,
     target_page: Page,
     style: &TransitionStyle,
